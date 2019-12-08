@@ -81,14 +81,18 @@ namespace Repository.FileSystem
             try
             {
                 filePath = NormalizeFilePath(filePath);
+                if (!File.Exists(filePath))
+                {
+                    return Task.FromResult(FileRepositoryOperationResult<bool>.Error("File not found"));
+                }
                 File.Delete(filePath);
+                return Task.FromResult(FileRepositoryOperationResult<bool>.Success(true));
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex.GetType().Name}: {ex.Message}");
-                return  Task.FromResult(FileRepositoryOperationResult<bool>.Error(ex.Message));
+                return Task.FromResult(FileRepositoryOperationResult<bool>.Error(ex.Message));
             }
-            return Task.FromResult(FileRepositoryOperationResult<bool>.Success(true));
         }
     }
 }

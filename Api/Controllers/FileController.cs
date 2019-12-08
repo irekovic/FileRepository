@@ -49,7 +49,7 @@ namespace Api.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpDelete("{**path}")]
+        [HttpDelete("")]
         public async Task<IActionResult> Delete(DeleteResourceModel deleteResourceModel)
         {
             _logger.LogTrace($"Deletion of object on path {deleteResourceModel.Path}");
